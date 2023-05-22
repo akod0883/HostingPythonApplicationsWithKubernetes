@@ -2,10 +2,16 @@
 This repository outlines a project I completed to run python appliations on a homemade K3s cluster. I will go through all the code and commands ran to complete to compelete each step so this project can be replicated. 
 
 ## Table of Contents 
-1. Cluster Setup
-2. Kubernetes Dashboard Configuration 
-3. Deployment
+1. [Cluster Setup](#cluster-setup)
+2. [Raspberry Pis](#raspberry-pis)
+3. [Ubuntu VM](#ubuntu-vm)
+4. [Verify](#verify-cluster-configuration)
+5. [Kubernetes Dashboard](#kubernetes-dashboard)
+6. [Creating Docker image containg Python App](#creating-docker-image-containg-python-app)
+7. [Running Python App on Kubernetes Cluster](#running-python-app-on-kubernetes-cluster)
+8. [Conclusion](#conclusion)
 
+<a name="Cluster Setup"></a>
 ## Cluster Setup
 The first step is to assemble all the nodes for the Kubernetes cluster. For my project, I wanted the ability to create a Kubernetes with nodes of different hardware. 
 
@@ -14,7 +20,7 @@ I used the following as nodes:
 - Raspberry Pi 2B
 - 1 Ubuntu VM running on a Macbook M1
 
-
+<a name="Raspberry Pis"></a>
 ## Raspberry Pis
 
 For both of the pis used in this project, I used the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) application to format the sd cards for both. I installed Raspberry Pi Lite 64 Bit for the 3B+ and Raspberry Pi Lite 32 Bit for the 2B. Note that this is a mandatory setup because older models of the Pi cannot run 32 bit archectectures. Typically, k3s cannot run well on 32bit archectectures, but I did not encounter any issues with my cluster. 
@@ -125,6 +131,7 @@ curl -sfL https://get.k3s.io | K3S_URL=https://ip-address:6443 K3S_TOKEN=node-to
 ### Helpful resource
 https://www.youtube.com/watch?v=rOXkutK8ANc&t=1581
 
+<a name="Ubuntu VM"></a>
 ## Ubuntu VM
 - role: worker
 - image: Ubuntu 22.04
@@ -144,13 +151,16 @@ Install K3s and add node to cluster
 curl -sfL https://get.k3s.io | K3S_URL=https://ip-address:6443 K3S_TOKEN=node-token sh -
 ```
 
-## Verify 
+<a name="Verify Cluster Configuration"></a>
+## Verify Cluster Configuration
 To verify that all the nodes were correctly added to the cluster run 
 ```
 kubectl get nodes
 ```
 ![get_nodes](pics/get_nodes.png)
 
+
+<a name="Kubernetes Dashboard "></a>
 ## Kubernetes Dashboard 
 Before going on, it is a good idea to expose the cluster to connections outside of the cluster, so you can view information about the cluster locally. To do this, you need to get the deployment information from one of the nodes and add the information to your local kuberenets config file. This only has to be done once. I will show how to do this.
 
@@ -254,6 +264,7 @@ You may be prompted to provide a token to sign in. To obtain the token, run the 
 
 https://www.youtube.com/watch?v=rOXkutK8ANc&t=1581s
 
+<a name="Creating Docker image containg Python App"></a>
 ## Creating Docker image containg Python App
 
 To recap, the goal of this project was to create a kubernetes deployment that can handle any python app. The next part in the process is to package a python file into a docker image that can be deployed to a kuberetes cluster for completion. In order to create a docker image, make sure to have a [docker hub](https://hub.docker.com/) account and [docker desktop](https://www.docker.com/products/docker-desktop/) installed. 
@@ -266,6 +277,8 @@ After completing the two files, run `docker-compose build app_name` to build the
 
 To test whether or not your image is running normal, I reccomend running `docker-compose up k3python`. If everything is running normally, run `docker-compose push k3python`, to push the image to docker hub. 
 
+
+<a name="Running Python App on Kubernetes Cluster"></a>
 ## Running Python App on Kubernetes Cluster
 
 Refer to the `kubernetes/deployments/deployment.yaml` file for information on key parts of any kubernetes deployment. 
@@ -280,6 +293,7 @@ Once the file is completed, you are now ready to start your app on your kubernet
 https://www.youtube.com/watch?v=rOXkutK8ANc&t=1581s
 
 
+<a name="Conclusion"></a>
 ## Conclusion
 
 By this point you should have the knowledge to create your python app that can run on your own kubernetes deployment. Hopefully this experience was informative and fun!
