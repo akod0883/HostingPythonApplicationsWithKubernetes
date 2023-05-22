@@ -1,0 +1,9 @@
+version: "3.4"
+services:
+  k3python:
+    build:
+      context: .
+    container_name: k3python
+    image: akhilvk2/k3python:1.0.0
+    ports:
+    - 5000:5000
