@@ -290,7 +290,7 @@ Once the file is completed, you are now ready to start your app on your kubernet
 
 ### Helpful resource
 
-https://www.youtube.com/watch?v=rOXkutK8ANc&t=1581s
+https://www.youtube.com/watch?v=d1ZMnV4yM1U&t=575s
 
 
 <a name="Conclusion"></a>
