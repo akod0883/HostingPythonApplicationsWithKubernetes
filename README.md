@@ -262,7 +262,7 @@ You may be prompted to provide a token to sign in. To obtain the token, run the 
 
 ### Helpful resource
 
-https://www.youtube.com/watch?v=rOXkutK8ANc&t=1581s
+https://www.youtube.com/watch?v=d1ZMnV4yM1U&t=575s
 
 <a name="Creating Docker image containg Python App"></a>
 ## Creating Docker image containg Python App
